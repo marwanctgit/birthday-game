@@ -147,11 +147,20 @@ const gameData = {
             label: "Letter",
             title: "A little letter",
             message: `
-                {name},
+                My dearest {name},
 
-                I know there are a lot of miles between us today. But I think about you more than you probably realise: in the quiet moments, the busy ones, and every moment in between.
+                Some days the distance between us feels impossibly big. Then I hear your voice, or see your name light up my phone, and suddenly you feel close enough to touch.
 
-                You make ordinary days feel like something worth remembering.
+                I don't think you realise how much you mean to me. You're the first thing I think about when I wake up and the last thing on my mind before I sleep. When something good happens, you're the one I want to tell. When things get hard, you're the one who makes everything feel okay again.
+
+                Thank you for loving me across all these miles. For your patience, your warmth, and for choosing us, every single day.
+
+                I can't wait for the day "goodnight" doesn't come through a screen, when I can just hold your hand and never have to let go.
+
+                Until then, remember this: wherever you are, my heart is right there with you.
+
+                Yours, always and completely,
+                {myName} ❤️
             `,
         },
         gift: {
