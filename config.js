@@ -20,11 +20,15 @@ const birthdayConfig = {
         I wish I could be there beside you today.
         Even though we're far apart, I wanted to create a little place that belongs only to us.
 
-        Thank you for every laugh, every call, and every time you made a hard day feel easier. You make my world softer, brighter and so much happier, and I don't say it nearly enough.
+        Today the whole world celebrates the day you were born, but I think I'm the one who got the real gift: you. Out of everyone in this world, I somehow get to love you, and I will never stop being grateful for that.
 
-        Today is all about you. I hope it's full of good food, good people and a lot of smiling, and I hope you can feel how loved you are, even from all the way over here.
+        If I could give you just one thing this birthday, it would be the chance to see yourself through my eyes. Then you'd finally understand how beautiful you are, inside and out, and how much brighter everything is simply because you're in it.
 
-        One day soon I'll tell you all of this in person. Until then, this little game will have to hold my hug for you.
+        I hope this year is gentle with you. I hope it brings you every dream you've been quietly holding onto, endless reasons to smile, and so much love that you never once doubt how special you are.
+
+        And I promise you this: one day I won't be sending you birthday wishes from miles away. I'll be right there beside you, holding you close, singing terribly, watching you blow out your candles, and falling for you all over again.
+
+        Until that day comes, know that you are loved more than words, or this little game, could ever say.
 
         Happy Birthday, my love. ❤️
     `,
