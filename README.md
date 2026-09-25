@@ -19,8 +19,10 @@ birthday-game/
 ├── script.js       game logic (no need to touch)
 ├── style.css       design (colours are at the top, under :root)
 └── assets/
+    ├── audio/      the two music-box tracks
     ├── fonts/      bundled fonts
     └── icons/      tab icon
+tools/make_music.py generates the music (not needed to run the game)
 ```
 
 ---
@@ -51,7 +53,20 @@ Anywhere in the text you can write `{name}` (her name) or `{myName}` (yours).
 - `giftLink`: a button to a voucher or booking
 - `finalVideo`: a YouTube link
 
-Photos and music are also switched off. The comments in `config.js` show how to add them later if you change your mind.
+Photos are switched off. The comment in `config.js` shows how to add them later if you change your mind.
+
+---
+
+## Music
+
+Two original music-box tracks come with the game. They play only after she taps **🔇 Music** (top right), which glows with a small tip on the intro so she notices it.
+
+- `assets/audio/music-box.mp3`: a gentle original melody that loops in the background.
+- `assets/audio/happy-birthday.mp3`: a music-box "Happy Birthday" that starts the moment she taps **Unlock my message**, then the loop comes back.
+
+Both were synthesised by `tools/make_music.py` (numpy + ffmpeg). Nothing is copyrighted, and the "Happy Birthday" tune is in the public domain. Music pauses when she leaves the page.
+
+To switch music off, set `music.src` to `""` in `config.js`.
 
 ---
 

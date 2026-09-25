@@ -233,6 +233,14 @@ img { max-width: 100%; display: block; }
     backdrop-filter: blur(8px);
 }
 .music-toggle[aria-pressed="true"] { border-color: rgba(245, 169, 184, 0.6); }
+.music-toggle.is-hinting { animation: soft-pulse 2.4s ease-in-out infinite; }
+
+.music-hint {
+    margin: 8px 0 0;
+    color: var(--ink-faint);
+    font-size: 14px;
+}
+.music-hint strong { color: var(--ink-soft); }
 
 /* ---------- Screens ---------- */
 

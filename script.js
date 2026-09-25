@@ -789,12 +789,14 @@
         var btn = $("unlockBtn");
         btn.disabled = false;
         btn.textContent = fmt(unlock.button || "Unlock ❤️");
+        soundtrack.warm();
     };
 
     $("unlockBtn").addEventListener("click", function () {
         var btn = this;
         var lock = $("lock");
         btn.disabled = true;
+        soundtrack.celebrate();
         lock.classList.add("is-shaking");
         setTimeout(function () {
             lock.classList.remove("is-shaking");
@@ -918,19 +920,30 @@
     });
 
     $("replayBtn").addEventListener("click", function () {
+        soundtrack.rearm();
         resetState();
         go("intro");
     });
 
     /* ------------------------------------------------------------------ music
-       Never autoplays. The button only appears if the song file exists. */
+       Never autoplays: she switches it on with the Music button, which only
+       appears if the track exists. The background track loops; the finale
+       plays once when she unlocks her message, then the loop comes back. */
 
-    (function setupMusic() {
+    var soundtrack = (function setupMusic() {
         var music = cfg.music || {};
         var src = String(music.src || "").trim();
+        var finale = String(music.finale || "").trim();
         var audio = $("bgMusic");
         var btn = $("musicToggle");
-        if (!src) return;
+        var hint = $("musicHint");
+        var noop = function () {};
+        if (!src) return { celebrate: noop, rearm: noop, warm: noop };
+
+        var wantOn = false;         // she has the music switched on
+        var finalePlayed = false;
+        var pausedByHide = false;
+        var track = "";
 
         function setOn(on) {
             btn.setAttribute("aria-pressed", on ? "true" : "false");
@@ -939,40 +952,106 @@
         }
         setOn(false);
 
-        audio.src = src;
         var vol = parseFloat(music.volume);
         if (!isNaN(vol)) audio.volume = Math.max(0, Math.min(1, vol));
 
+        function load(next) {
+            track = next;
+            audio.loop = next === src;
+            audio.src = next;
+        }
+
+        function play(next) {
+            if (track !== next) load(next);
+            var p = audio.play();
+            if (p && p.catch) {
+                p.catch(function (err) {
+                    if (err && err.name === "AbortError") return;   // superseded by a newer play/pause
+                    if (track !== src) { play(src); return; }
+                    wantOn = false;
+                    setOn(false);
+                    toast("The music couldn't play 😢");
+                });
+            }
+        }
+
+        function showButton() {
+            if (!btn.hidden) return;
+            btn.hidden = false;
+            btn.classList.add("is-hinting");
+            hint.hidden = false;
+        }
+
+        audio.addEventListener("ended", function () {
+            if (wantOn && track !== src) play(src);
+        });
+
         audio.addEventListener("error", function () {
+            if (track !== src) {            // finale missing: fall back to the loop
+                if (wantOn) play(src); else load(src);
+                return;
+            }
             btn.hidden = true;
+            hint.hidden = true;
+            wantOn = false;
             setOn(false);
         });
 
+        load(src);
         if (/^https?:$/.test(location.protocol) && window.fetch) {
             fetch(src, { method: "HEAD", cache: "no-store" })
-                .then(function (r) { if (r.ok || r.status === 405) btn.hidden = false; })
-                .catch(function () { /* no song: keep the button hidden */ });
+                .then(function (r) { if (r.ok || r.status === 405) showButton(); })
+                .catch(function () { /* no track: keep the button hidden */ });
         } else {
             audio.preload = "metadata";
-            audio.addEventListener("loadedmetadata", function () { btn.hidden = false; }, { once: true });
+            audio.addEventListener("loadedmetadata", showButton, { once: true });
             audio.load();
         }
 
         btn.addEventListener("click", function () {
-            if (audio.paused) {
-                var playing = audio.play();
+            btn.classList.remove("is-hinting");
+            hint.hidden = true;
+            if (!wantOn) {
+                wantOn = true;
                 setOn(true);
-                if (playing && playing.catch) {
-                    playing.catch(function () {
-                        setOn(false);
-                        toast("The song couldn't play 😢");
-                    });
+                // Switched on at the very end? Start with the birthday song.
+                if (current === "final" && finale && !finalePlayed) {
+                    finalePlayed = true;
+                    play(finale);
+                } else {
+                    play(track || src);
                 }
             } else {
+                wantOn = false;
                 audio.pause();
                 setOn(false);
             }
         });
+
+        // Pause when she leaves the page, pick up again when she's back.
+        document.addEventListener("visibilitychange", function () {
+            if (document.hidden) {
+                if (!audio.paused) { pausedByHide = true; audio.pause(); }
+            } else if (pausedByHide) {
+                pausedByHide = false;
+                if (wantOn) play(track);
+            }
+        });
+
+        return {
+            // Called straight from the unlock tap, so phones allow the switch.
+            celebrate: function () {
+                if (wantOn && finale && !finalePlayed) {
+                    finalePlayed = true;
+                    play(finale);
+                }
+            },
+            rearm: function () { finalePlayed = false; },
+            // Fetch the finale ahead of time so it starts right on the tap.
+            warm: function () {
+                if (wantOn && finale && !finalePlayed && window.fetch) fetch(finale).catch(noop);
+            }
+        };
     })();
 
     /* ------------------------------------------------------------------ start */

@@ -67,10 +67,12 @@ const birthdayConfig = {
         label: "Open your real gift 🎁",
     },
 
-    // Music is turned off. (To add a song later: put an .mp3 in assets/audio/
-    // and set src to e.g. "assets/audio/song.mp3".)
+    // Music never autoplays: she turns it on with the 🔇 Music button.
+    // Both tracks are original music-box recordings made for this game
+    // (tools/make_music.py). Set src to "" to switch music off.
     music: {
-        src: "",
+        src: "assets/audio/music-box.mp3",          // loops softly in the background
+        finale: "assets/audio/happy-birthday.mp3",   // plays when she unlocks the message
         volume: 0.6,
     },
 };
