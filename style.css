@@ -897,6 +897,43 @@ img { max-width: 100%; display: block; }
     80% { transform: rotate(2deg); }
 }
 
+/* Initials meeting (Us, when there are no photos) */
+.us-scene {
+    display: flex;
+    align-items: center;
+    align-self: center;
+    gap: 14px;
+    margin-top: 16px;
+}
+.us-initial {
+    display: grid;
+    place-items: center;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, var(--blush), var(--gold));
+    box-shadow: 0 10px 26px rgba(10, 4, 18, 0.45);
+    color: var(--plum);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 1;
+}
+.us-initial--me { animation: us-from-left 0.9s var(--ease-out) 0.1s backwards; }
+.us-initial--you { animation: us-from-right 0.9s var(--ease-out) 0.1s backwards; }
+.us-heart {
+    width: 36px;
+    height: 36px;
+    background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23f5a9b8' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+    filter: drop-shadow(0 4px 12px rgba(245, 169, 184, 0.6));
+    animation: us-pop 0.6s var(--ease-spring) 0.85s backwards, heartbeat 1.6s ease-in-out 1.5s infinite;
+}
+
+@keyframes us-from-left { from { opacity: 0; transform: translateX(-70px); } }
+@keyframes us-from-right { from { opacity: 0; transform: translateX(70px); } }
+@keyframes us-pop { from { opacity: 0; transform: scale(0); } }
+
 /* Polaroids (Us) */
 .polaroids {
     display: flex;

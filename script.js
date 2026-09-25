@@ -693,9 +693,19 @@
             }, 1500);
             later(function () { content.classList.add("is-on"); }, 1900);
         } else {
-            scene.hidden = true;
+            var hasPhotos = (cfg.photos || []).some(function (ph) { return ph && ph.src; });
+            if (hasPhotos) {
+                scene.hidden = true;
+            } else {
+                // No photos: your two initials meet in the middle with a heart.
+                var us = el("div", "us-scene");
+                us.appendChild(el("span", "us-initial us-initial--me", initial(cfg.myName)));
+                us.appendChild(el("span", "us-heart"));
+                us.appendChild(el("span", "us-initial us-initial--you", initial(cfg.girlfriendName)));
+                scene.appendChild(us);
+            }
             buildUsExtras(extra);
-            later(function () { content.classList.add("is-on"); }, 100);
+            later(function () { content.classList.add("is-on"); }, hasPhotos ? 100 : 700);
         }
 
         modalReturnFocus = card;
@@ -708,6 +718,11 @@
             saveState();
         }
         card.classList.add("is-opened");
+    }
+
+    function initial(name) {
+        var first = String(name || "").trim().charAt(0);
+        return first ? first.toUpperCase() : "♥";
     }
 
     function buildUsExtras(container) {
