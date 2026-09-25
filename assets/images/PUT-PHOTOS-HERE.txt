@@ -1,0 +1,7 @@
+Drop your photos in this folder, then list them in config.js:
+
+  photos:     shown in the "❤️ Us" card  (photo1.jpg, photo2.jpg, photo3.jpg by default)
+  finalPhoto: shown above the final message (final.jpg by default)
+
+Tip: phone photos are often 3–5 MB. Shrink them to about 1200px wide
+so the game loads fast on mobile data.

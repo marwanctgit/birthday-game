@@ -1,0 +1,4 @@
+Drop an .mp3 file here and name it song.mp3
+(or change music.src in config.js to match your file name).
+
+If there's no file, the music button simply stays hidden.

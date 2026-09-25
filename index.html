@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#1d1330">
+    <title>A little something for you ❤️</title>
+    <meta name="description" content="Tap to open.">
+    <meta property="og:title" content="A little something for you ❤️">
+    <meta property="og:description" content="Tap to open.">
+    <link rel="icon" href="assets/icons/heart.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="sky" id="sky" aria-hidden="true"></div>
+    <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
+
+    <header class="topbar">
+        <ol class="progress" id="progress" aria-label="Your progress" hidden>
+            <li></li><li></li><li></li><li></li>
+        </ol>
+        <button class="music-toggle" id="musicToggle" type="button" aria-pressed="false" hidden>
+            <span class="music-icon" aria-hidden="true">🔇</span><span class="music-label">Music</span>
+        </button>
+    </header>
+
+    <main id="app">
+
+        <!-- INTRO -->
+        <section class="screen screen--center" id="screen-intro" data-screen="intro">
+            <div class="intro">
+                <div class="intro-heart" aria-hidden="true"></div>
+                <div class="intro-lines" id="introLines"></div>
+                <div class="intro-actions" id="introActions">
+                    <button class="btn btn--primary" id="startBtn" type="button"></button>
+                    <button class="btn btn--link" id="restartBtn" type="button" hidden>Start over</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEVEL 1 — QUIZ -->
+        <section class="screen screen--center" id="screen-quiz" data-screen="quiz">
+            <div class="card">
+                <p class="eyebrow">Level 1 · <span id="quizCounter"></span></p>
+                <h2 class="card-title">How well do you know us?</h2>
+                <div id="quizBody">
+                    <img class="quiz-photo" id="quizPhoto" alt="" hidden>
+                    <p class="question" id="quizQuestion"></p>
+                    <div class="options" id="quizOptions"></div>
+                    <p class="feedback" id="quizFeedback" aria-live="polite"></p>
+                    <button class="btn btn--primary btn--small" id="quizContinue" type="button" hidden>Next question →</button>
+                </div>
+                <div class="done" id="quizDone" hidden>
+                    <h3 class="done-title" id="quizDoneTitle"></h3>
+                    <p class="done-text" id="quizDoneText"></p>
+                    <button class="btn btn--primary" id="quizNext" type="button"></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEVEL 2 — PUZZLE -->
+        <section class="screen screen--center" id="screen-puzzle" data-screen="puzzle">
+            <div class="card">
+                <p class="eyebrow">Level 2</p>
+                <h2 class="card-title">Put the words in order</h2>
+                <p class="card-sub" id="puzzleSub">Tap the words to build the sentence. Tap a word again to send it back.</p>
+                <div class="answer" id="puzzleAnswer" aria-label="Your sentence"></div>
+                <div class="pool" id="puzzlePool" aria-label="Words to use"></div>
+                <p class="feedback" id="puzzleFeedback" aria-live="polite"></p>
+                <div class="puzzle-tools" id="puzzleTools">
+                    <button class="btn btn--ghost btn--small" id="puzzleHint" type="button">💡 Hint</button>
+                    <button class="btn btn--ghost btn--small" id="puzzleReset" type="button">↺ Reset</button>
+                </div>
+                <div class="done" id="puzzleDone" hidden>
+                    <p class="reveal" id="puzzleReveal"></p>
+                    <button class="btn btn--primary" id="puzzleNext" type="button"></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEVEL 3 — CHOOSE YOUR PATH -->
+        <section class="screen screen--center" id="screen-paths" data-screen="paths">
+            <div class="paths-wrap">
+                <p class="eyebrow">Level 3</p>
+                <h2 class="card-title">Choose your path</h2>
+                <p class="card-sub" id="pathsSub">Open all three. Each one hides something.</p>
+                <div class="paths" id="paths"></div>
+                <div class="done" id="pathsDone" hidden>
+                    <p class="done-text" id="pathsDoneText"></p>
+                    <button class="btn btn--primary" id="pathsNext" type="button"></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEVEL 4 — UNLOCK -->
+        <section class="screen screen--center" id="screen-unlock" data-screen="unlock">
+            <div class="unlock">
+                <p class="eyebrow">Level 4</p>
+                <div class="unlock-lines" id="unlockLines"></div>
+                <div class="lock" id="lock" aria-hidden="true">
+                    <svg viewBox="0 0 120 150" width="120" height="150">
+                        <defs>
+                            <linearGradient id="lockBody" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0" stop-color="#ffd6dc"/>
+                                <stop offset="1" stop-color="#f2a7b3"/>
+                            </linearGradient>
+                            <linearGradient id="lockShackle" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0" stop-color="#f7dcae"/>
+                                <stop offset="1" stop-color="#d9a868"/>
+                            </linearGradient>
+                        </defs>
+                        <path class="lock-shackle" d="M34 72 V46 a26 26 0 0 1 52 0 V72" fill="none" stroke="url(#lockShackle)" stroke-width="11" stroke-linecap="round"/>
+                        <path class="lock-body" d="M60 146 C60 146 10 112 10 84 a24 24 0 0 1 50 -8 a24 24 0 0 1 50 8 C110 112 60 146 60 146 Z" fill="url(#lockBody)"/>
+                        <circle cx="60" cy="98" r="7" fill="#8a3f5c"/>
+                        <rect x="57" y="100" width="6" height="16" rx="3" fill="#8a3f5c"/>
+                    </svg>
+                </div>
+                <button class="btn btn--primary btn--glow" id="unlockBtn" type="button"></button>
+            </div>
+        </section>
+
+        <!-- FINAL -->
+        <section class="screen" id="screen-final" data-screen="final">
+            <div class="final">
+                <h1 class="final-title" id="finalTitle" title="Tap me"></h1>
+                <p class="final-subtitle" id="finalSubtitle"></p>
+                <figure class="final-photo" id="finalPhotoWrap" hidden>
+                    <img id="finalPhoto" alt="">
+                </figure>
+                <div class="final-message" id="finalMessage"></div>
+                <p class="signature" id="signature"></p>
+                <ul class="dates" id="dates" hidden></ul>
+                <div class="final-video" id="finalVideo" hidden></div>
+                <a class="btn btn--primary" id="giftLink" href="#" target="_blank" rel="noopener noreferrer" hidden></a>
+                <p class="ps" id="ps"></p>
+                <button class="btn btn--link" id="replayBtn" type="button">↺ Play again</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal used by the three path cards -->
+    <div class="modal" id="modal" hidden>
+        <div class="modal-backdrop" data-close></div>
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <button class="modal-close" type="button" aria-label="Close" data-close>×</button>
+            <div class="modal-scene" id="modalScene"></div>
+            <div class="modal-content" id="modalContent">
+                <h3 class="modal-title" id="modalTitle"></h3>
+                <div class="modal-text" id="modalText"></div>
+                <div class="modal-extra" id="modalExtra"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flash" id="flash" aria-hidden="true"></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <audio id="bgMusic" loop preload="none"></audio>
+
+    <noscript>
+        <p class="noscript">This little surprise needs JavaScript turned on ❤️</p>
+    </noscript>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
